@@ -108,6 +108,15 @@
   margin-bottom: 3rem;
   padding-bottom: 1.5rem;
   border-bottom: var(--border);
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 8px,
+    rgba(0, 0, 0, 0.03) 8px,
+    rgba(0, 0, 0, 0.03) 9px
+  );
+  padding-top: 1rem;
+  margin-top: -1rem;
 }
 
 .section-deco-num {
