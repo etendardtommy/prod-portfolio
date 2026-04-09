@@ -34,7 +34,7 @@ export default function Articles() {
 
   return (
     <section className="section">
-      <div className="container articles-page">
+      <div className="container">
         <Reveal>
           <div className="section-heading">
             <span className="section-deco-num">02</span>
@@ -42,7 +42,9 @@ export default function Articles() {
             <p className="section-subtitle">Mes articles et procédures techniques.</p>
           </div>
         </Reveal>
+      </div>
 
+      <div className="container articles-page">
         <Reveal delay={100}>
           <div className="search-bar">
             <Search size={18} />
@@ -92,4 +94,5 @@ export default function Articles() {
       </div>
     </section>
   );
+
 }
