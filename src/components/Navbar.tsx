@@ -1,6 +1,5 @@
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
-import ThemeToggle from "./ThemeToggle";
 
 const links = [
   { to: "/", label: "Accueil" },
@@ -17,7 +16,7 @@ export default function Navbar() {
     <header className="navbar">
       <div className="navbar-inner container">
         <NavLink to="/" className="logo">
-          Tommy<span className="dot">.</span>
+          Portfolio
         </NavLink>
 
         <button
@@ -40,7 +39,6 @@ export default function Navbar() {
               {l.label}
             </NavLink>
           ))}
-          <ThemeToggle />
         </nav>
       </div>
     </header>
