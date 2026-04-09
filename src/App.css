@@ -127,6 +127,7 @@
 .home-section {
   position: relative;
   overflow: hidden;
+  flex: 1;
 }
 
 /* Floating shapes */
@@ -314,7 +315,7 @@
 .project-links a:hover { color: var(--blue); }
 
 /* Project Detail */
-.project-detail { max-width: 800px; }
+.project-detail { max-width: 860px; margin: 0 auto; width: 100%; }
 
 .back-link {
   display: inline-flex;
@@ -408,7 +409,7 @@
 }
 
 /* ====== ARTICLES ====== */
-.articles-page { max-width: 800px; }
+.articles-page { max-width: 860px; margin: 0 auto; width: 100%; }
 
 .search-bar {
   display: flex;
@@ -470,7 +471,7 @@
 }
 
 /* Article Detail */
-.article-detail { max-width: 800px; }
+.article-detail { max-width: 860px; margin: 0 auto; width: 100%; }
 
 .article-detail-image {
   width: 100%;
