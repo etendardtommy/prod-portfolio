@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import CustomCursor from "./components/CustomCursor";
 import AnalyticsTracker from "./components/AnalyticsTracker";
 import Home from "./pages/Home";
 import Portfolio from "./pages/Portfolio";
@@ -15,7 +14,6 @@ import "./App.css";
 export default function App() {
   return (
     <BrowserRouter>
-      <CustomCursor />
       <AnalyticsTracker />
       <Navbar />
       <main>

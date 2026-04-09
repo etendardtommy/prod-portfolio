@@ -14,14 +14,23 @@ export default function Reveal({ children, className = "", from = "bottom", dela
     const el = ref.current;
     if (!el) return;
 
+    const reveal = () => setTimeout(() => el.classList.add("revealed"), delay);
+
+    // Si l'élément est déjà visible (ex: après navigation), on le révèle immédiatement
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom >= 0) {
+      reveal();
+      return;
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setTimeout(() => el.classList.add("revealed"), delay);
+          reveal();
           observer.disconnect();
         }
       },
-      { threshold: 0.08 }
+      { threshold: 0 }
     );
 
     observer.observe(el);
