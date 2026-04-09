@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Search } from "lucide-react";
 import { fetchApi } from "../lib/api";
 import type { Article } from "../lib/types";
+import Reveal from "../components/Reveal";
 
 export default function Articles() {
   const [articles, setArticles] = useState<Article[]>([]);
@@ -34,53 +35,57 @@ export default function Articles() {
   return (
     <section className="section">
       <div className="container articles-page">
-        <h1 className="animate-fade-in">
-          <span className="gradient-text">Articles</span> & Procédures
-        </h1>
+        <Reveal>
+          <div className="section-heading">
+            <span className="section-deco-num">02</span>
+            <h1>Articles</h1>
+            <p className="section-subtitle">Mes articles et procédures techniques.</p>
+          </div>
+        </Reveal>
 
-        <div className="search-bar animate-fade-in delay-100">
-          <Search size={18} />
-          <input
-            type="text"
-            placeholder="Rechercher un article..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </div>
+        <Reveal delay={100}>
+          <div className="search-bar">
+            <Search size={18} />
+            <input
+              type="text"
+              placeholder="Rechercher un article..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+        </Reveal>
 
         {loading ? (
           <p>Chargement...</p>
         ) : filtered.length === 0 ? (
           <p className="empty-state">Aucun article ne correspond à votre recherche.</p>
         ) : (
-          <div className="articles-list animate-fade-in delay-200">
-            {filtered.map((article) => (
-              <Link
-                key={article.id}
-                to={`/articles/${article.id}`}
-                className="article-card glass-panel"
-              >
-                {article.image_url && (
-                  <img
-                    src={article.image_url}
-                    alt={article.title}
-                    className="article-image"
-                    loading="lazy"
-                  />
-                )}
-                <div className="article-body">
-                  <span className="article-date">{formatDate(article.created_at)}</span>
-                  <h3>{article.title}</h3>
-                  {article.summary && <p>{article.summary}</p>}
-                  {article.tags && (
-                    <div className="tags">
-                      {article.tags.split(",").map((t) => (
-                        <span key={t.trim()} className="tag">{t.trim()}</span>
-                      ))}
-                    </div>
+          <div className="articles-list">
+            {filtered.map((article, i) => (
+              <Reveal key={article.id} from={i % 2 === 0 ? "left" : "right"} delay={i * 80}>
+                <Link to={`/articles/${article.id}`} className="article-card">
+                  {article.image_url && (
+                    <img
+                      src={article.image_url}
+                      alt={article.title}
+                      className="article-image"
+                      loading="lazy"
+                    />
                   )}
-                </div>
-              </Link>
+                  <div className="article-body">
+                    <span className="article-date">{formatDate(article.created_at)}</span>
+                    <h3>{article.title}</h3>
+                    {article.summary && <p>{article.summary}</p>}
+                    {article.tags && (
+                      <div className="tags">
+                        {article.tags.split(",").map((t) => (
+                          <span key={t.trim()} className="tag">{t.trim()}</span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </Link>
+              </Reveal>
             ))}
           </div>
         )}
