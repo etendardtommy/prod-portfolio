@@ -35,6 +35,15 @@ export interface Experience {
   technologies: string | null;
 }
 
+export interface About {
+  id: number;
+  photo_url: string | null;
+  bio: string | null;
+  github_url: string | null;
+  linkedin_url: string | null;
+  cv_url: string | null;
+}
+
 export interface Skill {
   id: number;
   name: string;

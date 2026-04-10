@@ -10,6 +10,7 @@ import Articles from "./pages/Articles";
 import ArticleDetail from "./pages/ArticleDetail";
 import Contact from "./pages/Contact";
 import Skills from "./pages/Skills";
+import About from "./pages/About";
 import "./App.css";
 
 export default function App() {
@@ -27,6 +28,7 @@ export default function App() {
           <Route path="/articles/:id" element={<ArticleDetail />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/skills" element={<Skills />} />
+          <Route path="/about" element={<About />} />
         </Routes>
       </main>
       <Footer />

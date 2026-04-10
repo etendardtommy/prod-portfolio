@@ -7,7 +7,8 @@ const navItems = [
   { to: "/articles",   num: "02", label: "Articles" },
   { to: "/journey",    num: "03", label: "Parcours" },
   { to: "/skills",     num: "04", label: "Compétences" },
-  { to: "/contact",    num: "05", label: "Contact" },
+  { to: "/about",      num: "05", label: "À propos" },
+  { to: "/contact",    num: "06", label: "Contact" },
 ];
 
 export default function Home() {

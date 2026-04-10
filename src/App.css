@@ -670,6 +670,90 @@
 .form-status.success { color: #166534; }
 .form-status.error { color: #991b1b; }
 
+/* ====== ABOUT ====== */
+.about-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 4rem;
+  align-items: flex-start;
+}
+
+.about-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.about-photo {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border: var(--border);
+  box-shadow: var(--shadow);
+  display: block;
+}
+
+.about-photo-placeholder {
+  width: 100%;
+  aspect-ratio: 1;
+  border: var(--border);
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: var(--grey);
+  color: var(--black);
+  letter-spacing: -2px;
+}
+
+.about-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.about-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--black);
+  text-decoration: none;
+  padding: 0.5rem 0.8rem;
+  border: var(--border);
+  transition: background 0.1s, color 0.1s;
+}
+
+.about-link:hover {
+  background: var(--black);
+  color: var(--white);
+}
+
+.about-cv {
+  margin-top: 0.5rem;
+}
+
+/* Bio markdown */
+.about-bio { line-height: 1.8; }
+.about-bio h1, .about-bio h2, .about-bio h3 { margin-top: 1.5rem; margin-bottom: 0.5rem; }
+.about-bio p { color: #444; margin-bottom: 1rem; }
+.about-bio ul, .about-bio ol { padding-left: 1.5rem; margin-bottom: 1rem; color: #444; }
+.about-bio li { margin-bottom: 0.3rem; }
+.about-bio strong { color: var(--black); font-weight: 700; }
+.about-bio a { color: var(--black); text-decoration: underline; }
+.about-bio code { background: var(--grey); padding: 0.1rem 0.4rem; font-size: 0.88em; border: var(--border-thin); }
+.about-bio blockquote { border-left: 3px solid var(--black); padding-left: 1rem; color: #666; font-style: italic; margin: 1rem 0; }
+
+@media (max-width: 768px) {
+  .about-layout { grid-template-columns: 1fr; gap: 2rem; }
+  .about-photo, .about-photo-placeholder { max-width: 200px; }
+}
+
 /* ====== SKILLS ====== */
 .skills-filters {
   display: flex;

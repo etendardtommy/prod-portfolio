@@ -7,6 +7,7 @@ const links = [
   { to: "/articles", label: "Articles" },
   { to: "/journey", label: "Parcours" },
   { to: "/skills", label: "Compétences" },
+  { to: "/about", label: "À propos" },
   { to: "/contact", label: "Contact" },
 ];
 
