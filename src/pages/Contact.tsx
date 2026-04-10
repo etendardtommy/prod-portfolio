@@ -51,7 +51,7 @@ export default function Contact() {
                   <MapPin size={20} />
                   <div>
                     <strong>Localisation</strong>
-                    <span>France</span>
+                    <span>Caen, France</span>
                   </div>
                 </div>
               </div>
