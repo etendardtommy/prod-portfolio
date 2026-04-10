@@ -761,7 +761,7 @@
 .skill-logo img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
 }
 
 .skill-card:hover .skill-logo img {
@@ -783,8 +783,20 @@
 .skill-body h3 {
   font-size: 0.8rem;
   letter-spacing: 0.5px;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
 }
+
+.skill-desc {
+  font-size: 0.75rem;
+  color: var(--mid);
+  margin: 0.3rem 0 0.4rem;
+  line-height: 1.4;
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 400;
+}
+
+.skill-card:hover .skill-desc { color: #aaa; }
 
 .skill-body .tags {
   justify-content: center;

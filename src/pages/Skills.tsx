@@ -84,6 +84,9 @@ export default function Skills() {
                   </div>
                   <div className="skill-body">
                     <h3>{skill.name}</h3>
+                    {skill.description && (
+                      <p className="skill-desc">{skill.description}</p>
+                    )}
                     {skill.category && (
                       <div className="tags">
                         {skill.category
