@@ -715,25 +715,17 @@
   background: var(--white);
   position: relative;
   overflow: visible;
-  transition: transform 0.15s, box-shadow 0.15s, background 0.12s, color 0.12s;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.skill-card-inner {
+  width: 100%;
+  overflow: hidden;
 }
 
 .skill-card:hover {
   transform: translate(-3px, -3px);
   box-shadow: var(--shadow-lg);
-  background: var(--black);
-  color: var(--white);
-}
-
-.skill-card:hover .tag {
-  background: var(--white);
-  color: var(--black);
-  border-color: var(--white);
-}
-
-.skill-card:hover .skill-logo-placeholder {
-  border-color: var(--white);
-  color: var(--white);
 }
 
 .skill-card::before {
@@ -764,9 +756,6 @@
   object-fit: cover;
 }
 
-.skill-card:hover .skill-logo img {
-  filter: brightness(0) invert(1);
-}
 
 .skill-logo-placeholder {
   font-size: 1.6rem;
@@ -780,10 +769,18 @@
   color: var(--black);
 }
 
+.skill-body {
+  width: 100%;
+  overflow: hidden;
+}
+
 .skill-body h3 {
   font-size: 0.8rem;
   letter-spacing: 0.5px;
   margin-bottom: 0.4rem;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 .skill-desc {
@@ -796,7 +793,6 @@
   font-weight: 400;
 }
 
-.skill-card:hover .skill-desc { color: #aaa; }
 
 .skill-body .tags {
   justify-content: center;
