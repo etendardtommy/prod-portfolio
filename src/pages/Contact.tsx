@@ -29,7 +29,7 @@ export default function Contact() {
       <div className="container">
         <Reveal>
           <div className="section-heading">
-            <span className="section-deco-num">04</span>
+            <span className="section-deco-num">05</span>
             <h1>Me Contacter</h1>
             <p className="section-subtitle">Discutons d'un projet ou d'une collaboration.</p>
           </div>

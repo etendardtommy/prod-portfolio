@@ -3,10 +3,11 @@ import { Download } from "lucide-react";
 import Reveal from "../components/Reveal";
 
 const navItems = [
-  { to: "/portfolio", num: "01", label: "Projets" },
-  { to: "/articles",  num: "02", label: "Articles" },
-  { to: "/journey",   num: "03", label: "Parcours" },
-  { to: "/contact",   num: "04", label: "Contact" },
+  { to: "/portfolio",  num: "01", label: "Projets" },
+  { to: "/articles",   num: "02", label: "Articles" },
+  { to: "/journey",    num: "03", label: "Parcours" },
+  { to: "/skills",     num: "04", label: "Compétences" },
+  { to: "/contact",    num: "05", label: "Contact" },
 ];
 
 export default function Home() {

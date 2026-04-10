@@ -9,6 +9,7 @@ import Journey from "./pages/Journey";
 import Articles from "./pages/Articles";
 import ArticleDetail from "./pages/ArticleDetail";
 import Contact from "./pages/Contact";
+import Skills from "./pages/Skills";
 import "./App.css";
 
 export default function App() {
@@ -25,6 +26,7 @@ export default function App() {
           <Route path="/articles" element={<Articles />} />
           <Route path="/articles/:id" element={<ArticleDetail />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/skills" element={<Skills />} />
         </Routes>
       </main>
       <Footer />

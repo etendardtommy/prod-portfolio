@@ -34,3 +34,11 @@ export interface Experience {
   end_date: string | null;
   technologies: string | null;
 }
+
+export interface Skill {
+  id: number;
+  name: string;
+  logo_url: string | null;
+  category: string | null;
+  sort_order: number;
+}

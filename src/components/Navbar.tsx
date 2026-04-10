@@ -3,9 +3,10 @@ import { useState } from "react";
 
 const links = [
   { to: "/", label: "Accueil" },
-  { to: "/journey", label: "Parcours" },
   { to: "/portfolio", label: "Projets" },
   { to: "/articles", label: "Articles" },
+  { to: "/journey", label: "Parcours" },
+  { to: "/skills", label: "Compétences" },
   { to: "/contact", label: "Contact" },
 ];
 
