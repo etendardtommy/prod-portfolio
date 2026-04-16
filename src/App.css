@@ -872,7 +872,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--grey);
+  background: var(--white);
   border-bottom: var(--border);
   padding: 1rem;
   flex-shrink: 0;
