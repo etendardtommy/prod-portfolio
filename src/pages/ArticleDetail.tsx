@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
-import DOMPurify from "dompurify";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { fetchApi } from "../lib/api";
 import type { Article } from "../lib/types";
 
@@ -61,12 +62,11 @@ export default function ArticleDetail() {
         )}
 
         {article.content && (
-          <div
-            className="article-html-content"
-            dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(article.content),
-            }}
-          />
+          <div className="article-html-content">
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              {article.content}
+            </ReactMarkdown>
+          </div>
         )}
       </div>
     </section>
