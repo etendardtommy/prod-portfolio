@@ -17,8 +17,7 @@ dist-ssr
 .env.development
 !.env.production
 
-# dist/ inclus volontairement pour déploiement git
-# dist/
+dist/
 
 # Editor directories and files
 .vscode/*
