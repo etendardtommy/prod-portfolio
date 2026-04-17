@@ -68,6 +68,20 @@ export default function ArticleDetail() {
             </ReactMarkdown>
           </div>
         )}
+
+        {article.banner_link && (
+          <a
+            href={article.banner_link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="article-banner"
+          >
+            <span className="article-banner-label">
+              {article.banner_label || "Voir la procédure complète"}
+            </span>
+            <span className="article-banner-arrow">→</span>
+          </a>
+        )}
       </div>
     </section>
   );

@@ -65,6 +65,20 @@ export default function ProjectDetail() {
             </a>
           )}
         </div>
+
+        {project.banner_link && (
+          <a
+            href={project.banner_link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="article-banner"
+          >
+            <span className="article-banner-label">
+              {project.banner_label || "Voir la procédure complète"}
+            </span>
+            <span className="article-banner-arrow">→</span>
+          </a>
+        )}
       </div>
     </section>
   );

@@ -9,6 +9,8 @@ export interface Project {
   github_url: string | null;
   live_url: string | null;
   featured: boolean;
+  banner_link: string | null;
+  banner_label: string | null;
   created_at: string;
 }
 
@@ -21,6 +23,8 @@ export interface Article {
   image_url: string | null;
   category: string | null;
   tags: string | null;
+  banner_link: string | null;
+  banner_label: string | null;
   created_at: string;
 }
 
