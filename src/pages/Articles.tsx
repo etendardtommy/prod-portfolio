@@ -9,6 +9,7 @@ export default function Articles() {
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
 
   useEffect(() => {
     fetchApi<Article[]>("/articles/public")
@@ -17,12 +18,17 @@ export default function Articles() {
       .finally(() => setLoading(false));
   }, []);
 
+  const categories = Array.from(
+    new Set(articles.map((a) => a.category).filter(Boolean) as string[])
+  );
+
   const filtered = articles.filter((a) => {
     const q = search.toLowerCase();
-    return (
+    const matchSearch =
       a.title.toLowerCase().includes(q) ||
-      (a.tags && a.tags.toLowerCase().includes(q))
-    );
+      (a.tags && a.tags.toLowerCase().includes(q));
+    const matchCategory = !activeCategory || a.category === activeCategory;
+    return matchSearch && matchCategory;
   });
 
   const formatDate = (date: string) =>
@@ -57,6 +63,28 @@ export default function Articles() {
           </div>
         </Reveal>
 
+        {categories.length > 0 && (
+          <Reveal delay={150}>
+            <div className="skills-filters">
+              <button
+                className={`skill-filter-btn${activeCategory === null ? " active" : ""}`}
+                onClick={() => setActiveCategory(null)}
+              >
+                Tous
+              </button>
+              {categories.map((cat) => (
+                <button
+                  key={cat}
+                  className={`skill-filter-btn${activeCategory === cat ? " active" : ""}`}
+                  onClick={() => setActiveCategory(cat === activeCategory ? null : cat)}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+          </Reveal>
+        )}
+
         {loading ? (
           <p>Chargement...</p>
         ) : filtered.length === 0 ? (
@@ -75,7 +103,12 @@ export default function Articles() {
                     />
                   )}
                   <div className="article-body">
-                    <span className="article-date">{formatDate(article.created_at)}</span>
+                    <div className="article-body-top">
+                      <span className="article-date">{formatDate(article.created_at)}</span>
+                      {article.category && (
+                        <span className="article-category">{article.category}</span>
+                      )}
+                    </div>
                     <h3>{article.title}</h3>
                     {article.summary && <p>{article.summary}</p>}
                     {article.tags && (
@@ -94,5 +127,4 @@ export default function Articles() {
       </div>
     </section>
   );
-
 }
