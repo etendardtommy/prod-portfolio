@@ -626,8 +626,7 @@
 
 .article-detail-image {
   width: 100%;
-  height: auto;
-  max-height: 500px;
+  height: 280px;
   object-fit: cover;
   border: var(--border);
   box-shadow: var(--shadow);
@@ -1069,7 +1068,7 @@
   .article-image { width: 100%; height: 140px; border-right: none; border-bottom: var(--border); }
   .footer-inner { flex-direction: column; gap: 0.8rem; text-align: center; }
   .project-detail-image { height: 220px; }
-  .article-detail-image { max-height: 300px; }
+  .article-detail-image { height: 180px; }
   .article-toc { display: none; }
   .article-detail-layout.has-toc .article-detail { max-width: 860px; }
 }
