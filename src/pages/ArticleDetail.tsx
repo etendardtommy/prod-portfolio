@@ -12,6 +12,21 @@ interface Heading {
   id: string;
 }
 
+interface BannerSegment {
+  type: "banner";
+  href: string;
+  label: string;
+}
+
+interface MarkdownSegment {
+  type: "markdown";
+  content: string;
+}
+
+type Segment = BannerSegment | MarkdownSegment;
+
+const BANNER_RE = /^> BANNER:\s*(https?:\/\/\S+)(?:\s*\|\s*(.+))?$/;
+
 function slugifyHeading(text: string): string {
   return text
     .toLowerCase()
@@ -22,17 +37,43 @@ function slugifyHeading(text: string): string {
 }
 
 function extractHeadings(content: string): Heading[] {
-  const lines = content.split("\n");
-  const headings: Heading[] = [];
-  for (const line of lines) {
+  return content.split("\n").reduce<Heading[]>((acc, line) => {
     const match = line.match(/^(#{1,3})\s+(.+)/);
     if (match) {
       const text = match[2].trim();
-      headings.push({ level: match[1].length, text, id: slugifyHeading(text) });
+      acc.push({ level: match[1].length, text, id: slugifyHeading(text) });
+    }
+    return acc;
+  }, []);
+}
+
+function parseSegments(content: string): Segment[] {
+  const lines = content.split("\n");
+  const segments: Segment[] = [];
+  let buffer: string[] = [];
+
+  for (const line of lines) {
+    const match = line.match(BANNER_RE);
+    if (match) {
+      if (buffer.length) {
+        segments.push({ type: "markdown", content: buffer.join("\n") });
+        buffer = [];
+      }
+      segments.push({ type: "banner", href: match[1], label: match[2]?.trim() || "Voir la procédure complète" });
+    } else {
+      buffer.push(line);
     }
   }
-  return headings;
+
+  if (buffer.length) segments.push({ type: "markdown", content: buffer.join("\n") });
+  return segments;
 }
+
+const mdComponents = {
+  h1: ({ children }: { children?: React.ReactNode }) => <h1 id={slugifyHeading(String(children))}>{children}</h1>,
+  h2: ({ children }: { children?: React.ReactNode }) => <h2 id={slugifyHeading(String(children))}>{children}</h2>,
+  h3: ({ children }: { children?: React.ReactNode }) => <h3 id={slugifyHeading(String(children))}>{children}</h3>,
+};
 
 export default function ArticleDetail() {
   const { id } = useParams();
@@ -91,6 +132,7 @@ export default function ArticleDetail() {
     });
 
   const headings = article.content ? extractHeadings(article.content) : [];
+  const segments = article.content ? parseSegments(article.content) : [];
 
   return (
     <section className="section">
@@ -115,37 +157,25 @@ export default function ArticleDetail() {
             </div>
           )}
 
-          {article.content && (
+          {segments.length > 0 && (
             <div className="article-html-content">
-              <ReactMarkdown
-                remarkPlugins={[remarkGfm]}
-                components={{
-                  h1: ({ children }) => {
-                    const text = String(children);
-                    return <h1 id={slugifyHeading(text)}>{children}</h1>;
-                  },
-                  h2: ({ children }) => {
-                    const text = String(children);
-                    return <h2 id={slugifyHeading(text)}>{children}</h2>;
-                  },
-                  h3: ({ children }) => {
-                    const text = String(children);
-                    return <h3 id={slugifyHeading(text)}>{children}</h3>;
-                  },
-                }}
-              >
-                {article.content}
-              </ReactMarkdown>
+              {segments.map((seg, i) =>
+                seg.type === "banner" ? (
+                  <a key={i} href={seg.href} target="_blank" rel="noopener noreferrer" className="article-banner">
+                    <span className="article-banner-label">{seg.label}</span>
+                    <span className="article-banner-arrow">→</span>
+                  </a>
+                ) : (
+                  <ReactMarkdown key={i} remarkPlugins={[remarkGfm]} components={mdComponents}>
+                    {seg.content}
+                  </ReactMarkdown>
+                )
+              )}
             </div>
           )}
 
           {article.banner_link && (
-            <a
-              href={article.banner_link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="article-banner"
-            >
+            <a href={article.banner_link} target="_blank" rel="noopener noreferrer" className="article-banner">
               <span className="article-banner-label">
                 {article.banner_label || "Voir la procédure complète"}
               </span>
