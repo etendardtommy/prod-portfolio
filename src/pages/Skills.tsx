@@ -1,7 +1,79 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { fetchApi } from "../lib/api";
 import type { Skill } from "../lib/types";
 import Reveal from "../components/Reveal";
+
+function SkillCard({ skill }: { skill: Skill }) {
+  const [open, setOpen] = useState(false);
+  const detailsRef = useRef<HTMLDivElement>(null);
+
+  const hasDetails = Boolean(skill.details);
+
+  return (
+    <div
+      className={`skill-card${open ? " skill-card--open" : ""}${hasDetails ? " skill-card--expandable" : ""}`}
+      onClick={() => hasDetails && setOpen((v) => !v)}
+      role={hasDetails ? "button" : undefined}
+      tabIndex={hasDetails ? 0 : undefined}
+      onKeyDown={(e) => hasDetails && e.key === "Enter" && setOpen((v) => !v)}
+    >
+      <div className="skill-logo">
+        {skill.logo_url ? (
+          <img src={skill.logo_url} alt={skill.name} />
+        ) : (
+          <span className="skill-logo-placeholder">
+            {skill.name.charAt(0).toUpperCase()}
+          </span>
+        )}
+      </div>
+      <div className="skill-body">
+        <div className="skill-body-header">
+          <h3>{skill.name}</h3>
+          {hasDetails && (
+            <span className="skill-expand-icon">{open ? "−" : "+"}</span>
+          )}
+        </div>
+        {skill.description && (
+          <p className="skill-desc">{skill.description}</p>
+        )}
+        {skill.category && (
+          <div className="tags">
+            {skill.category
+              .split(",")
+              .map((t) => t.trim())
+              .filter(Boolean)
+              .map((t) => (
+                <span key={t} className="tag">
+                  {t}
+                </span>
+              ))}
+          </div>
+        )}
+        {hasDetails && (
+          <div
+            ref={detailsRef}
+            className="skill-details"
+            style={{
+              maxHeight: open
+                ? detailsRef.current?.scrollHeight
+                  ? `${detailsRef.current.scrollHeight}px`
+                  : "1000px"
+                : "0px",
+            }}
+          >
+            <div className="skill-details-inner">
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                {skill.details!}
+              </ReactMarkdown>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
 
 export default function Skills() {
   const [skills, setSkills] = useState<Skill[]>([]);
@@ -72,36 +144,7 @@ export default function Skills() {
           <div className="skills-grid">
             {filtered.map((skill, i) => (
               <Reveal key={skill.id} from="bottom" delay={Math.min(i * 50, 400)}>
-                <div className="skill-card">
-                  <div className="skill-logo">
-                    {skill.logo_url ? (
-                      <img src={skill.logo_url} alt={skill.name} />
-                    ) : (
-                      <span className="skill-logo-placeholder">
-                        {skill.name.charAt(0).toUpperCase()}
-                      </span>
-                    )}
-                  </div>
-                  <div className="skill-body">
-                    <h3>{skill.name}</h3>
-                    {skill.description && (
-                      <p className="skill-desc">{skill.description}</p>
-                    )}
-                    {skill.category && (
-                      <div className="tags">
-                        {skill.category
-                          .split(",")
-                          .map((t) => t.trim())
-                          .filter(Boolean)
-                          .map((t) => (
-                            <span key={t} className="tag">
-                              {t}
-                            </span>
-                          ))}
-                      </div>
-                    )}
-                  </div>
-                </div>
+                <SkillCard skill={skill} />
               </Reveal>
             ))}
           </div>

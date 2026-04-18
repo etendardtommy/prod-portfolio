@@ -54,5 +54,6 @@ export interface Skill {
   logo_url: string | null;
   category: string | null;
   description: string | null;
+  details: string | null;
   sort_order: number;
 }
