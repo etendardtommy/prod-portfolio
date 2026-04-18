@@ -1,23 +1,27 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import remarkBreaks from "remark-breaks";
 import { fetchApi } from "../lib/api";
 import type { Skill } from "../lib/types";
 import Reveal from "../components/Reveal";
 
-function SkillCard({ skill }: { skill: Skill }) {
-  const [open, setOpen] = useState(false);
-  const detailsRef = useRef<HTMLDivElement>(null);
+interface SkillCardProps {
+  skill: Skill;
+  open: boolean;
+  onToggle: () => void;
+}
 
+function SkillCard({ skill, open, onToggle }: SkillCardProps) {
   const hasDetails = Boolean(skill.details);
 
   return (
     <div
       className={`skill-card${open ? " skill-card--open" : ""}${hasDetails ? " skill-card--expandable" : ""}`}
-      onClick={() => hasDetails && setOpen((v) => !v)}
+      onClick={() => hasDetails && onToggle()}
       role={hasDetails ? "button" : undefined}
       tabIndex={hasDetails ? 0 : undefined}
-      onKeyDown={(e) => hasDetails && e.key === "Enter" && setOpen((v) => !v)}
+      onKeyDown={(e) => hasDetails && e.key === "Enter" && onToggle()}
     >
       <div className="skill-logo">
         {skill.logo_url ? (
@@ -51,23 +55,11 @@ function SkillCard({ skill }: { skill: Skill }) {
               ))}
           </div>
         )}
-        {hasDetails && (
-          <div
-            ref={detailsRef}
-            className="skill-details"
-            style={{
-              maxHeight: open
-                ? detailsRef.current?.scrollHeight
-                  ? `${detailsRef.current.scrollHeight}px`
-                  : "1000px"
-                : "0px",
-            }}
-          >
-            <div className="skill-details-inner">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                {skill.details!}
-              </ReactMarkdown>
-            </div>
+        {hasDetails && open && (
+          <div className="skill-details-inner">
+            <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>
+              {skill.details!}
+            </ReactMarkdown>
           </div>
         )}
       </div>
@@ -79,6 +71,7 @@ export default function Skills() {
   const [skills, setSkills] = useState<Skill[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTag, setActiveTag] = useState<string | null>(null);
+  const [openSkillId, setOpenSkillId] = useState<number | null>(null);
 
   useEffect(() => {
     fetchApi<Skill[]>("/skills/public")
@@ -142,11 +135,25 @@ export default function Skills() {
           <p className="empty-state">Aucune compétence trouvée.</p>
         ) : (
           <div className="skills-grid">
-            {filtered.map((skill, i) => (
-              <Reveal key={skill.id} from="bottom" delay={Math.min(i * 50, 400)}>
-                <SkillCard skill={skill} />
-              </Reveal>
-            ))}
+            {filtered.map((skill, i) => {
+              const isOpen = openSkillId === skill.id;
+              return (
+                <Reveal
+                  key={skill.id}
+                  from="bottom"
+                  delay={Math.min(i * 50, 400)}
+                  className={isOpen ? "skill-reveal--open" : ""}
+                >
+                  <SkillCard
+                    skill={skill}
+                    open={isOpen}
+                    onToggle={() =>
+                      setOpenSkillId(isOpen ? null : skill.id)
+                    }
+                  />
+                </Reveal>
+              );
+            })}
           </div>
         )}
       </div>
