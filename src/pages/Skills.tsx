@@ -142,7 +142,6 @@ export default function Skills() {
                   key={skill.id}
                   from="bottom"
                   delay={Math.min(i * 50, 400)}
-                  className={isOpen ? "skill-reveal--open" : ""}
                 >
                   <SkillCard
                     skill={skill}

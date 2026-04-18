@@ -1060,43 +1060,6 @@
   opacity: 1;
 }
 
-/* Carte ouverte : pleine largeur de la grille */
-.skill-reveal--open {
-  grid-column: 1 / -1;
-}
-
-.skill-reveal--open .skill-card {
-  flex-direction: row;
-  align-items: flex-start;
-  text-align: left;
-}
-
-.skill-reveal--open .skill-logo {
-  width: 120px;
-  min-width: 120px;
-  height: 120px;
-  border-bottom: none;
-  border-right: var(--border);
-  flex-shrink: 0;
-}
-
-.skill-reveal--open .skill-body {
-  padding: 1.2rem 1.4rem;
-  flex: 1;
-}
-
-.skill-reveal--open .skill-body-header {
-  justify-content: flex-start;
-}
-
-.skill-reveal--open .skill-body .tags {
-  justify-content: flex-start;
-}
-
-.skill-reveal--open .skill-body h3 {
-  font-size: 1rem;
-}
-
 .skill-details-inner {
   border-top: var(--border-thin);
   margin-top: 0.8rem;
