@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import remarkBreaks from "remark-breaks";
 import { fetchApi } from "../lib/api";
 import type { Experience } from "../lib/types";
 import Reveal from "../components/Reveal";
@@ -47,7 +50,13 @@ export default function Journey() {
                   </span>
                   <h3>{exp.title}</h3>
                   <p className="timeline-subtitle">{exp.company}</p>
-                  {exp.description && <p>{exp.description}</p>}
+                  {exp.description && (
+                    <div className="timeline-desc">
+                      <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>
+                        {exp.description}
+                      </ReactMarkdown>
+                    </div>
+                  )}
                   {exp.technologies && (
                     <div className="tags">
                       {exp.technologies.split(",").map((t) => (
