@@ -66,6 +66,9 @@ export default function About() {
                 <a href="https://api.t-etendard.fr/api/cv" download className="btn-primary about-cv">
                   <Download size={16} /> Télécharger le CV
                 </a>
+                <a href="https://api.t-etendard.fr/api/synthesis" download className="btn-primary about-cv">
+                  <Download size={16} /> Tableau de synthèse
+                </a>
               </div>
             </div>
           </Reveal>
