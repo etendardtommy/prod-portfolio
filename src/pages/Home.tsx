@@ -20,7 +20,7 @@ export default function Home() {
             <h1 className="home-name">Tommy<br />Etendard</h1>
             <div className="home-meta">
               <span className="home-role">Étudiant BTS SIO</span>
-              <a href="/cv.pdf" download className="btn-outline">
+              <a href="https://api.t-etendard.fr/api/cv" download className="btn-outline">
                 <Download size={14} /> CV
               </a>
             </div>
