@@ -63,11 +63,9 @@ export default function About() {
                     <LinkedinIcon size={18} /> LinkedIn
                   </a>
                 )}
-                {about.cv_url && (
-                  <a href={about.cv_url} download className="btn-primary about-cv">
-                    <Download size={16} /> Télécharger le CV
-                  </a>
-                )}
+                <a href="https://api.t-etendard.fr/api/cv" download className="btn-primary about-cv">
+                  <Download size={16} /> Télécharger le CV
+                </a>
               </div>
             </div>
           </Reveal>
