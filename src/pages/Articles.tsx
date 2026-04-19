@@ -10,6 +10,7 @@ export default function Articles() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [activeTag, setActiveTag] = useState<string | null>(null);
 
   useEffect(() => {
     fetchApi<Article[]>("/articles/public")
@@ -22,13 +23,24 @@ export default function Articles() {
     new Set(articles.map((a) => a.category).filter(Boolean) as string[])
   );
 
+  const allTags = Array.from(
+    new Set(
+      articles.flatMap((a) =>
+        a.tags ? a.tags.split(",").map((t) => t.trim()).filter(Boolean) : []
+      )
+    )
+  ).sort();
+
   const filtered = articles.filter((a) => {
     const q = search.toLowerCase();
     const matchSearch =
       a.title.toLowerCase().includes(q) ||
       (a.tags && a.tags.toLowerCase().includes(q));
     const matchCategory = !activeCategory || a.category === activeCategory;
-    return matchSearch && matchCategory;
+    const matchTag =
+      !activeTag ||
+      (a.tags && a.tags.split(",").map((t) => t.trim()).includes(activeTag));
+    return matchSearch && matchCategory && matchTag;
   });
 
   const formatDate = (date: string) =>
@@ -85,6 +97,22 @@ export default function Articles() {
           </Reveal>
         )}
 
+        {allTags.length > 0 && (
+          <Reveal delay={200}>
+            <div className="tags tags-filter">
+              {allTags.map((tag) => (
+                <button
+                  key={tag}
+                  className={`tag tag-filter-btn${activeTag === tag ? " active" : ""}`}
+                  onClick={() => setActiveTag(tag === activeTag ? null : tag)}
+                >
+                  {tag}
+                </button>
+              ))}
+            </div>
+          </Reveal>
+        )}
+
         {loading ? (
           <p>Chargement...</p>
         ) : filtered.length === 0 ? (
@@ -113,9 +141,22 @@ export default function Articles() {
                     {article.summary && <p>{article.summary}</p>}
                     {article.tags && (
                       <div className="tags">
-                        {article.tags.split(",").map((t) => (
-                          <span key={t.trim()} className="tag">{t.trim()}</span>
-                        ))}
+                        {article.tags.split(",").map((t) => {
+                          const tag = t.trim();
+                          return (
+                            <span
+                              key={tag}
+                              className={`tag${activeTag === tag ? " active" : ""}`}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                setActiveTag(tag === activeTag ? null : tag);
+                              }}
+                            >
+                              {tag}
+                            </span>
+                          );
+                        })}
                       </div>
                     )}
                   </div>

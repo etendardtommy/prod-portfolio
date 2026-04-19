@@ -88,6 +88,45 @@ img { max-width: 100%; height: auto; }
   letter-spacing: 0.5px;
 }
 
+.tags-filter {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+.tag-filter-btn {
+  cursor: pointer;
+  font-family: inherit;
+  background: transparent;
+  color: var(--black);
+  border-color: var(--black);
+  transition: background 0.15s, color 0.15s;
+}
+
+.tag-filter-btn:hover,
+.tag-filter-btn.active {
+  background: var(--black);
+  color: var(--white);
+}
+
+.tag[style],
+.tag.active {
+  background: var(--white);
+  color: var(--black);
+  border-color: var(--black);
+}
+
+span.tag {
+  cursor: pointer;
+}
+
+span.tag.active {
+  background: var(--white);
+  color: var(--black);
+  border-color: var(--black);
+  outline: 2px solid var(--black);
+  outline-offset: 1px;
+}
+
 /* ====== BUTTONS ====== */
 .btn-primary {
   display: inline-flex;
