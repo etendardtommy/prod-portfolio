@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://portfolio.t-etendard.fr/sitemap.xml
+Sitemap: https://api.t-etendard.fr/sitemap.xml
