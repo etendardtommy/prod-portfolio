@@ -536,7 +536,7 @@
 .article-image {
   width: 160px;
   min-height: 140px;
-  object-fit: cover;
+  object-fit: contain;
   border-right: var(--border);
   flex-shrink: 0;
   filter: grayscale(15%);
@@ -640,8 +640,9 @@
 
 .article-detail-image {
   width: 100%;
-  height: 280px;
-  object-fit: cover;
+  height: auto;
+  max-height: 280px;
+  object-fit: contain;
   border: var(--border);
   box-shadow: var(--shadow);
   margin-bottom: 1.5rem;
@@ -1248,7 +1249,7 @@
   .article-image { width: 100%; height: 140px; border-right: none; border-bottom: var(--border); }
   .footer-inner { flex-direction: column; gap: 0.8rem; text-align: center; }
   .project-detail-image { max-height: 220px; }
-  .article-detail-image { height: 180px; }
+  .article-detail-image { max-height: 180px; }
   .article-toc { display: none; }
   .article-detail-layout.has-toc .article-detail { max-width: 860px; }
 }
