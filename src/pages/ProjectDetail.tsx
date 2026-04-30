@@ -3,7 +3,6 @@ import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, ExternalLink } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import remarkBreaks from "remark-breaks";
 import { GithubIcon } from "../components/BrandIcons";
 import { fetchApi } from "../lib/api";
 import type { Project } from "../lib/types";
@@ -62,7 +61,7 @@ export default function ProjectDetail() {
         )}
 
         <div className="project-content article-html-content">
-          <ReactMarkdown remarkPlugins={[remarkGfm, remarkBreaks]}>
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
             {project.content || project.description || ""}
           </ReactMarkdown>
         </div>
