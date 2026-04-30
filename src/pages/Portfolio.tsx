@@ -9,11 +9,12 @@ import Reveal from "../components/Reveal";
 export default function Portfolio() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     fetchApi<Project[]>("/portfolio/projects/public")
       .then(setProjects)
-      .catch(() => {})
+      .catch(() => setError(true))
       .finally(() => setLoading(false));
   }, []);
 
@@ -30,6 +31,8 @@ export default function Portfolio() {
 
         {loading ? (
           <p>Chargement...</p>
+        ) : error ? (
+          <p className="empty-state">Impossible de charger les projets. Veuillez réessayer.</p>
         ) : projects.length === 0 ? (
           <p className="empty-state">Aucun projet pour le moment.</p>
         ) : (

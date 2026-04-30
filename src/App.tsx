@@ -11,6 +11,7 @@ import ArticleDetail from "./pages/ArticleDetail";
 import Contact from "./pages/Contact";
 import Skills from "./pages/Skills";
 import About from "./pages/About";
+import NotFound from "./pages/NotFound";
 import "./App.css";
 
 export default function App() {
@@ -29,6 +30,7 @@ export default function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/skills" element={<Skills />} />
           <Route path="/about" element={<About />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
       <Footer />

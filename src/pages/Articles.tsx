@@ -8,6 +8,7 @@ import Reveal from "../components/Reveal";
 export default function Articles() {
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [activeTag, setActiveTag] = useState<string | null>(null);
@@ -15,7 +16,7 @@ export default function Articles() {
   useEffect(() => {
     fetchApi<Article[]>("/articles/public")
       .then(setArticles)
-      .catch(() => {})
+      .catch(() => setError(true))
       .finally(() => setLoading(false));
   }, []);
 
@@ -115,6 +116,8 @@ export default function Articles() {
 
         {loading ? (
           <p>Chargement...</p>
+        ) : error ? (
+          <p className="empty-state">Impossible de charger les articles. Veuillez réessayer.</p>
         ) : filtered.length === 0 ? (
           <p className="empty-state">Aucun article ne correspond à votre recherche.</p>
         ) : (

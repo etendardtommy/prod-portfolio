@@ -79,6 +79,7 @@ export default function ArticleDetail() {
   const { slug } = useParams();
   const [article, setArticle] = useState<Article | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
   const [activeId, setActiveId] = useState<string>("");
 
   useEffect(() => {
@@ -88,7 +89,7 @@ export default function ArticleDetail() {
         const found = list.find((a) => a.slug === slug);
         setArticle(found || null);
       })
-      .catch(() => {})
+      .catch(() => setError(true))
       .finally(() => setLoading(false));
   }, [slug]);
 
@@ -120,6 +121,14 @@ export default function ArticleDetail() {
   }, [article]);
 
   if (loading) return <div className="section container"><p>Chargement...</p></div>;
+  if (error) {
+    return (
+      <div className="section container">
+        <p>Impossible de charger l'article. Veuillez réessayer.</p>
+        <Link to="/articles" className="btn-outline"><ArrowLeft size={16} /> Retour</Link>
+      </div>
+    );
+  }
   if (!article) {
     return (
       <div className="section container">
