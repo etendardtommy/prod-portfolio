@@ -702,6 +702,14 @@
 
 .article-html-content pre code { background: none; color: var(--white); padding: 0; border: none; }
 
+.article-html-content img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1.5rem auto;
+  border: var(--border-thin);
+}
+
 .article-html-content table {
   width: 100%;
   border-collapse: collapse;
