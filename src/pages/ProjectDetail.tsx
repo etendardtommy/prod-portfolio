@@ -9,17 +9,26 @@ import { fetchApi } from "../lib/api";
 import type { Project } from "../lib/types";
 
 export default function ProjectDetail() {
-  const { id } = useParams();
+  const { slug } = useParams();
   const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    fetchApi<Project>(`/portfolio/projects/public/${id}`)
-      .then(setProject)
+    fetchApi<Project[]>("/portfolio/projects/public")
+      .then((list) => {
+        const found = list.find((p) => p.slug === slug);
+        if (found) setProject(found);
+        else setError(true);
+      })
       .catch(() => setError(true))
       .finally(() => setLoading(false));
-  }, [id]);
+  }, [slug]);
+
+  useEffect(() => {
+    if (project) document.title = `${project.title} — Tommy Étendard`;
+    return () => { document.title = "Tommy Étendard"; };
+  }, [project]);
 
   if (loading) return <div className="section container"><p>Chargement...</p></div>;
   if (error || !project) {

@@ -121,7 +121,7 @@ export default function Articles() {
           <div className="articles-list">
             {filtered.map((article, i) => (
               <Reveal key={article.id} from={i % 2 === 0 ? "left" : "right"} delay={i * 80}>
-                <Link to={`/articles/${article.id}`} className="article-card">
+                <Link to={`/articles/${article.slug}`} className="article-card">
                   {article.image_url && (
                     <img
                       src={article.image_url}

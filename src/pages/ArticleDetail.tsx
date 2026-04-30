@@ -76,7 +76,7 @@ const mdComponents = {
 };
 
 export default function ArticleDetail() {
-  const { id } = useParams();
+  const { slug } = useParams();
   const [article, setArticle] = useState<Article | null>(null);
   const [loading, setLoading] = useState(true);
   const [activeId, setActiveId] = useState<string>("");
@@ -85,12 +85,17 @@ export default function ArticleDetail() {
     fetchApi<Article>(`/articles/public`)
       .then((data: unknown) => {
         const list = data as Article[];
-        const found = list.find((a) => a.id === Number(id));
+        const found = list.find((a) => a.slug === slug);
         setArticle(found || null);
       })
       .catch(() => {})
       .finally(() => setLoading(false));
-  }, [id]);
+  }, [slug]);
+
+  useEffect(() => {
+    if (article) document.title = `${article.title} — Tommy Étendard`;
+    return () => { document.title = "Tommy Étendard"; };
+  }, [article]);
 
   useEffect(() => {
     if (!article?.content) return;

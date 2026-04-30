@@ -56,7 +56,7 @@ export default function Portfolio() {
                       </div>
                     )}
                     <div className="project-links">
-                      <Link to={`/portfolio/${project.id}`} className="btn-sm-link">Détails</Link>
+                      <Link to={`/portfolio/${project.slug}`} className="btn-sm-link">Détails</Link>
                       {project.live_url && (
                         <a href={project.live_url} target="_blank" rel="noopener noreferrer">
                           <ExternalLink size={16} />
