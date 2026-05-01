@@ -1,73 +1,58 @@
-# React + TypeScript + Vite
+# prod-portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Site portfolio personnel. Consomme l'API FastAPI partagée (`prod-api`) via `site_id = 1`.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **React 19** + **TypeScript** + **Vite**
+- **React Router** — navigation SPA
+- **react-markdown** + **remark-gfm** + **DOMPurify** — rendu Markdown sécurisé
+- **lucide-react** — icônes
 
-## React Compiler
+## Structure
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+prod-portfolio/
+├── src/
+│   ├── assets/       # Images et icônes
+│   ├── components/   # Composants réutilisables
+│   ├── lib/          # Utilitaires, client API, helpers
+│   ├── pages/        # Pages associées aux routes
+│   ├── App.tsx       # Composant racine + routing
+│   └── main.tsx      # Point d'entrée React
+├── public/           # Assets statiques
+├── dist/             # Build de production (committé)
+├── .env.production   # Variables d'environnement de production
+└── deploy.sh         # Script de déploiement
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Démarrage
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+npm run dev      # Serveur de développement (http://localhost:5173)
+npm run build    # Vérification TypeScript + build → dist/
+npm run lint     # ESLint
+npm run preview  # Prévisualisation du build de production
 ```
+
+## Variables d'environnement
+
+```env
+VITE_API_URL=https://api.t-etendard.fr
+```
+
+`.env.production` est committé. `.env.local` et `.env.development` sont ignorés par git.
+
+## Points clés
+
+- **Design brutaliste** — monochrome, hachures — à ne pas modifier sans raison.
+- **`AnalyticsTracker`** — composant qui envoie les pages vues en POST à `/api/analytics/`.
+- Le contenu des articles et projets est rendu en Markdown avec `react-markdown` et sanitisé via `DOMPurify`.
+- Pas de framework de tests.
+
+## Déploiement
+
+Le `dist/` est committé dans git. Le déploiement consiste en un simple `git pull` sur le serveur, qui sert les fichiers statiques via le conteneur Docker `nginx-static`.
+
+**Production :** `https://portfolio.t-etendard.fr`
