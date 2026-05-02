@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 
+const hasMouse = window.matchMedia("(pointer: fine)").matches;
+
 export default function CustomCursor() {
   const [pos, setPos] = useState({ x: -100, y: -100 });
   const [hovered, setHovered] = useState(false);
   const [clicked, setClicked] = useState(false);
 
   useEffect(() => {
+    if (!hasMouse) return;
+
     const move = (e: MouseEvent) => {
       setPos({ x: e.clientX, y: e.clientY });
       const target = e.target as HTMLElement;
@@ -23,6 +27,8 @@ export default function CustomCursor() {
       window.removeEventListener("mouseup", up);
     };
   }, []);
+
+  if (!hasMouse) return null;
 
   return (
     <div

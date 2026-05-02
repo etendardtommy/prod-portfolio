@@ -1,24 +1,16 @@
-import { useEffect, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Download } from "lucide-react";
-import { fetchApi } from "../lib/api";
 import type { About as AboutType } from "../lib/types";
+import { useFetch } from "../lib/useFetch";
+import PageLoader from "../components/PageLoader";
 import Reveal from "../components/Reveal";
 import { GithubIcon, LinkedinIcon } from "../components/BrandIcons";
 
 export default function About() {
-  const [about, setAbout] = useState<AboutType | null>(null);
-  const [loading, setLoading] = useState(true);
+  const { data: about, loading } = useFetch<AboutType>("/about/public");
 
-  useEffect(() => {
-    fetchApi<AboutType>("/about/public")
-      .then(setAbout)
-      .catch(() => {})
-      .finally(() => setLoading(false));
-  }, []);
-
-  if (loading) return <div className="section container"><p>Chargement...</p></div>;
+  if (loading) return <PageLoader />;
   if (!about) return (
     <section className="section">
       <div className="container">

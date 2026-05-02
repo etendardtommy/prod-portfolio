@@ -1,22 +1,14 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ExternalLink } from "lucide-react";
 import { GithubIcon } from "../components/BrandIcons";
-import { fetchApi } from "../lib/api";
 import type { Project } from "../lib/types";
+import { useFetch } from "../lib/useFetch";
+import PageLoader from "../components/PageLoader";
 import Reveal from "../components/Reveal";
 
 export default function Portfolio() {
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-
-  useEffect(() => {
-    fetchApi<Project[]>("/portfolio/projects/public")
-      .then(setProjects)
-      .catch(() => setError(true))
-      .finally(() => setLoading(false));
-  }, []);
+  const { data, loading, error } = useFetch<Project[]>("/portfolio/projects/public");
+  const projects = data ?? [];
 
   return (
     <section className="section">
@@ -30,7 +22,7 @@ export default function Portfolio() {
         </Reveal>
 
         {loading ? (
-          <p>Chargement...</p>
+          <PageLoader />
         ) : error ? (
           <p className="empty-state">Impossible de charger les projets. Veuillez réessayer.</p>
         ) : projects.length === 0 ? (

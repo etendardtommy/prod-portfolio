@@ -1,24 +1,17 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Search } from "lucide-react";
-import { fetchApi } from "../lib/api";
 import type { Article } from "../lib/types";
+import { useFetch } from "../lib/useFetch";
+import PageLoader from "../components/PageLoader";
 import Reveal from "../components/Reveal";
 
 export default function Articles() {
-  const [articles, setArticles] = useState<Article[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
+  const { data, loading, error } = useFetch<Article[]>("/articles/public");
+  const articles = data ?? [];
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [activeTag, setActiveTag] = useState<string | null>(null);
-
-  useEffect(() => {
-    fetchApi<Article[]>("/articles/public")
-      .then(setArticles)
-      .catch(() => setError(true))
-      .finally(() => setLoading(false));
-  }, []);
 
   const categories = Array.from(
     new Set(articles.map((a) => a.category).filter(Boolean) as string[])
@@ -115,7 +108,7 @@ export default function Articles() {
         )}
 
         {loading ? (
-          <p>Chargement...</p>
+          <PageLoader />
         ) : error ? (
           <p className="empty-state">Impossible de charger les articles. Veuillez réessayer.</p>
         ) : filtered.length === 0 ? (

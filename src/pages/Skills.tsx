@@ -1,9 +1,10 @@
-import { useEffect, useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import remarkBreaks from "remark-breaks";
-import { fetchApi } from "../lib/api";
 import type { Skill } from "../lib/types";
+import { useFetch } from "../lib/useFetch";
+import PageLoader from "../components/PageLoader";
 import Reveal from "../components/Reveal";
 
 function SkillModal({ skill, onClose }: { skill: Skill; onClose: () => void }) {
@@ -60,17 +61,10 @@ function SkillModal({ skill, onClose }: { skill: Skill; onClose: () => void }) {
 }
 
 export default function Skills() {
-  const [skills, setSkills] = useState<Skill[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { data, loading } = useFetch<Skill[]>("/skills/public");
+  const skills = data ?? [];
   const [activeTag, setActiveTag] = useState<string | null>(null);
   const [openSkill, setOpenSkill] = useState<Skill | null>(null);
-
-  useEffect(() => {
-    fetchApi<Skill[]>("/skills/public")
-      .then(setSkills)
-      .catch(() => {})
-      .finally(() => setLoading(false));
-  }, []);
 
   const closeModal = useCallback(() => setOpenSkill(null), []);
 
@@ -124,7 +118,7 @@ export default function Skills() {
         )}
 
         {loading ? (
-          <p>Chargement...</p>
+          <PageLoader />
         ) : filtered.length === 0 ? (
           <p className="empty-state">Aucune compétence trouvée.</p>
         ) : (
