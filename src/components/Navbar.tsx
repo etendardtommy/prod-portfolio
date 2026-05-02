@@ -1,6 +1,5 @@
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
-import ThemeToggle from "./ThemeToggle";
 
 const links = [
   { to: "/", label: "Accueil" },
@@ -23,7 +22,6 @@ export default function Navbar() {
         </NavLink>
 
         <div className="navbar-actions">
-          <ThemeToggle />
           <button
             className={`menu-toggle ${open ? "open" : ""}`}
             onClick={() => setOpen(!open)}
